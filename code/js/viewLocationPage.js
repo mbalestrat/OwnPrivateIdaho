@@ -38,21 +38,36 @@ var chosenLocationObj = JSON.parse(chosenLocation);
   //Extract Weather from location
     var key = chosenLocationObj.lat + ',' + chosenLocationObj.long + ',' + forecastDate;
     var weatherInfoRaw = chosenLocationObj.forecasts[key];
+
     
         //Get the summary
-        //var weatherInfo = chosenLocationObj.forecasts[key];
-        //var currentInfo = weatherInfo.prototype.pop;
-        //split('"').join('');
+        var weatherInfo = JSON.stringify(weatherInfoRaw.data[0].summary);
+        var summary = weatherInfo.split('"').join('');
     
-       /* //Get the Lo Temps
+       //Get the Lo Temps
         var loTemp = JSON.stringify(weatherInfoRaw.data[0].apparentTemperatureMin);
         var loCel = loTemp.split('"').join('');
     
         //Get the Hi Temps
         var hiTemp = JSON.stringify(weatherInfoRaw.data[0].apparentTemperatureMax);
         var hiCel = hiTemp.split('"').join('');
-    
-        */
+
+        //Get the Chance of Rain
+        var precip = JSON.stringify(weatherInfoRaw.data[0].precipProbability);
+        var prob = precip.split('"').join('');
+
+        //Get the wind speed
+        var wind = JSON.stringify(weatherInfoRaw.data[0].windSpeed);
+        var windSp = precip.split('"').join('');
+
+        //Get the barometric pressure
+        var pressure = JSON.stringify(weatherInfoRaw.data[0].pressure);
+        var baro = pressure.split('"').join('');
+
+
+//Output to page
+document.getElementById("summary").innerHTML = "<strong>" + summary + "</strong>" + "<br> Chance of Rain: " + precip + "%" + "<br> Max/Min: " + hiCel + "&deg;C / " + loCel + "&deg;C" + "<br> Wind Speed: " + windSp + "km/h" + "<br> Barometric Pressure: " + baro + " atm";
+
 
 //Header Bar
 if (chosenLocation !== null) 
@@ -104,6 +119,8 @@ function locMap() {
     };
 }
 
+// Slider calls the getWeatherAtIndexForDate function, with a different callback function to display results on this page.
+
 
 //A date selection slider
 //30 positions
@@ -115,41 +132,3 @@ slide.onchange = function() {
     sliderDate.innerHTML = this.value;
 }
 
-
-
-
-//A summary of the weather
-/*
-
-
-function update(weather)
-{
-    temp.innerHTML = weather.temp;
-    loc.inner = weather.loc;
-    wind.innerHTML = weather.wind;
-    direction.innerHTML = weather.direction;
-    humidity.innerHTML = weather.humidity;
-    icon.src = "imgs/code/" + weather.icon + ".png";
-    console.log(icon.src)
-}
-
-window.onload = function ()
-{
-    temp = document.getElementById("temperature");
-    loc = document.getElementById("location");
-    icon = document.getElementById("icon");
-    humidity = document.getElementById("humidity");
-    wind = document.getElementById("direction");
-    
-    var weather = {};
-    weather.temp = ;
-    weather.wind = ;
-    weather.dirction = ;
-    weather.humidity =  ;
-    weather.loc = ;
-    weather.icon = ;
-     
-    update(weather);
-}
-*/
-//A “Remove this location” button

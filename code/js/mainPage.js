@@ -76,11 +76,11 @@ function mainPageWeatherResponse(index, response) // the weather obj
         var summary = weatherInfo.split('"').join('');
     
         //Get the Lo Temps
-        var loTemp = JSON.stringify(weatherInfoRaw.data[0].apparentTemperatureMin);
+        var loTemp = JSON.stringify(weatherInfoRaw.data[0].temperatureMin);
         var loCel = loTemp.split('"').join('');
     
         //Get the Hi Temps
-        var hiTemp = JSON.stringify(weatherInfoRaw.data[0].apparentTemperatureMax);
+        var hiTemp = JSON.stringify(weatherInfoRaw.data[0].temperatureMax);
         var hiCel = hiTemp.split('"').join('');
     
         //Get Icon
