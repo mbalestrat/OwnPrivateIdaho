@@ -14,12 +14,19 @@ var chosenLocationObj = JSON.parse(chosenLocation);
 //Extract name of location
     var locRawName = JSON.stringify(chosenLocationObj.nick);
     var loc = locRawName.split('"').join('');
+
+//Extract co-ordinates for map
+    var latRaw = JSON.stringify(chosenLocationObj.lat);
+    var latitude = Number(latRaw.split('"').join(''));
+
+    var longRaw = JSON.stringify(chosenLocationObj.long);
+    var longitude = Number(longRaw.split('"').join(''));
     
-/*    //Extract Weather from location
-    var key = chosenLocationObj.lat + ',' + chosenLocationObj.long + ',' + dateStr;
-    var weatherInfoRaw = chosenLocationObj.forecasts[key];
+  //Extract Weather from location
+    //var key = chosenLocationObj.lat + ',' + chosenLocationObj.long + ',' + dateStr;
+    //var weatherInfoRaw = chosenLocationObj.forecasts;
     
-        //Get the summary
+  /*      //Get the summary
         var weatherInfo = JSON.stringify(weatherInfoRaw.data[0].summary);
         var summary = weatherInfo.split('"').join('');
     
@@ -86,8 +93,8 @@ function locMap() {
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 8,
         center: {
-            lat: -34.397,
-            lng: 150.644
+            lat: latitude,
+            lng: longitude
         }
     });
 
