@@ -3,12 +3,12 @@
 // This is sample code to demonstrate navigation.
 // You need not use it for final app.
 
-
-
 var APP_PREFIX="weatherApp";
 
 
-var locationIndex = localStorage.getItem(APP_PREFIX + "-selectedLocation");
+var locationIndex = localStorage.getItem(APP_PREFIX + "-selected");
+
+
 if (locationIndex !== null) {
     var locationNames = ["Location A", "Location B"];
     // If a location name was specified, use it for header bar title.
