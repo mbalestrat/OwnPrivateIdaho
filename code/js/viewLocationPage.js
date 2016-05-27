@@ -5,16 +5,47 @@
 
 var APP_PREFIX="weatherApp";
 
+var chosenLocation = localStorage.getItem(APP_PREFIX + "-selected");
+var chosenLocationObj = JSON.parse(chosenLocation);
 
-var locationIndex = localStorage.getItem(APP_PREFIX + "-selected");
+//Pull data from localStorage capture
 
 
-if (locationIndex !== null) {
-    var locationNames = ["Location A", "Location B"];
-    // If a location name was specified, use it for header bar title.
-    document.getElementById("headerBarTitle").textContent = locationNames[locationIndex];
+//Extract name of location
+    var locRawName = JSON.stringify(chosenLocationObj.nick);
+    var loc = locRawName.split('"').join('');
+    
+/*    //Extract Weather from location
+    var key = chosenLocationObj.lat + ',' + chosenLocationObj.long + ',' + dateStr;
+    var weatherInfoRaw = chosenLocationObj.forecasts[key];
+    
+        //Get the summary
+        var weatherInfo = JSON.stringify(weatherInfoRaw.data[0].summary);
+        var summary = weatherInfo.split('"').join('');
+    
+        //Get the Lo Temps
+        var loTemp = JSON.stringify(weatherInfoRaw.data[0].apparentTemperatureMin);
+        var loCel = loTemp.split('"').join('');
+    
+        //Get the Hi Temps
+        var hiTemp = JSON.stringify(weatherInfoRaw.data[0].apparentTemperatureMax);
+        var hiCel = hiTemp.split('"').join('');
+    
+        //Get Icon
+        var iconR = JSON.stringify(weatherInfoRaw.data[0].icon);
+        var icon = iconR.split('"').join('');
+        */
 
-}
+if (chosenLocation !== null) 
+        {
+            document.getElementById("headerBarTitle").textContent = loc;
+        }
+    else
+        {
+            var locationNames = ["Location A", "Location B"];
+            // If a location name was specified, use it for header bar title.
+            document.getElementById("headerBarTitle").textContent = locationNames[locationIndex];
+        }
 
 //The date that dispalyedd weather applies to
 // Returns a date in the format "YYYY-MM-DD".
@@ -67,7 +98,7 @@ function locMap() {
 }
 
 
-//Adate selection slider
+//A date selection slider
 //30 positions
 //set to the far right
 var slide = document.getElementById('slide'),
