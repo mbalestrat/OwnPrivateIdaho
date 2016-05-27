@@ -99,7 +99,6 @@ function LocationWeatherCache() {
     // 
     this.removeLocationAtIndex = function (index) {
         if (index > -1) {
-            localStorage.removeItem(APP_PREFIX + index);
             locations.splice(index, 1);
             spliceCount++;
         }
@@ -150,8 +149,7 @@ function LocationWeatherCache() {
     this.getWeatherAtIndexForDate = function (index, date, callback) {
         //index = Number(index);
         var place = locations[index];
-        var key = place.lat + ',' + place.lng + ',' + date;
-        var forecast;
+        var key = place.lat + ',' + place.long + ',' + date;
 
         //Check if weather data point for date is already in forecasts array.
         if (place.forecasts.hasOwnProperty(key)) {
@@ -163,12 +161,12 @@ function LocationWeatherCache() {
             callbacks[key] = [callback, index];
 
             // If not, call forecast API with JSONP
-            var lookUp = jsonpRequest("https://api.forecast.io/forecast/" + APIkey, key);
+            jsonpRequest("https://api.forecast.io/forecast/" + APIkey, key);
         }
 
         // Store in forecasts array and return to callback function.
-        forecast.push(lookUp);
-        locations[index].forecasts["place.lat, place.lng, date"] = forecast[index];
+        //forecast.push(lookUp);
+        //locations[index].forecasts["place.lat, place.lng, date"] = forecast[index];
     };
 
     //------------------------------------------------------------------
@@ -185,12 +183,13 @@ function LocationWeatherCache() {
 
         var WeatherForecast = response.daily;
         var date = new Date(WeatherForecast.data[0].time * 1000);
-        date = date.forcastDateString();
+        date = date.forecastDateString();
 
-        var callbackIndex = response.lat + ',' + response.lng + ',' + date;
+        var callbackIndex = response.latitude + ',' + response.longitude + ',' + date;
 
         var callback = callbacks[callbackIndex][0];
-        var index = callbacks[callbackIndex][1];
+        index = callbacks[callbackIndex][1];
+        //var index = locations.length;
 
         delete callbacks[callbackIndex];
 
@@ -202,9 +201,6 @@ function LocationWeatherCache() {
         callback(index, WeatherForecast);
     };
 
-    this.getWeather = function (index, locations) {
-        locations[i].forecasts.push(jsonpRequest())
-    }
 
     //------------------------------------------------------------------
     // Private methods:
@@ -224,35 +220,34 @@ function LocationWeatherCache() {
     }
 }
 
-function jsonpRequest(url, data) {
-    // Build URL parameters from data object.
-    var params = "";
+    function jsonpRequest(url, data) {
+        // Build URL parameters from data object.
+        var params = "";
 
-    // For each key in data object...
-    for (var key in data) {
-        if (data.hasOwnProperty(key)) {
-            if (params.length == 0) {
-                // First parameter starts with '?'
-                params += "/";
-            } else {
-                // Subsequent parameter separated by '&'
-                params += ",";
-            }
+        // For each key in data object...
+        //for (var key in data) {
+            //if (data.hasOwnProperty(key)) {
+               // if (params.length == 0) {
+                    // First parameter starts with '?'
+                  //  params += "/";
+               // } else {
+                    // Subsequent parameter separated by '&'
+                   // params += ",";
+               // }
 
-            //var encodedKey = encodeURIComponent(key);
-            var encodedValue = encodeURIComponent(data[key]);
-            // encodedKey + "=" +
+                //var encodedKey = encodeURIComponent(key);
+                //var encodedValue = encodeURIComponent(data[key]);
+                // encodedKey + "=" +
 
-            params += encodedValue;
-        }
+                params += "/" + data;
+
+
+        params += "/?exclude=[currently,minutely,hourly,alerts,flags]&callback=locationWeatherCache.weatherResponse";
+
+        var script = document.createElement('script');
+        script.src = url + params;
+        document.body.appendChild(script);
     }
-
-    params += "/?exclude=[currently,minutely,hourly,alerts,flags]&callback=locationWeatherCache.weatherResponse";
-
-    var script = document.createElement('script');
-    script.src = url + params;
-    document.body.appendChild(script);
-}
 
 //================================================================
 // Restore the singleton locationWeatherCache from Local Storage.

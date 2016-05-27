@@ -3,6 +3,13 @@
 // This is sample code to demonstrate navigation.
 // You need not use it for final app.
 
+// Get the current date
+var currentDate = new Date();
+var dateStr = currentDate.forecastDateString();
+console.log(dateStr);
+
+//----------------------------------------------------------------------------------------
+
 
 function viewLocation(locationIndex) {
     //Save the desired location to local storage
@@ -14,9 +21,7 @@ function viewLocation(locationIndex) {
 window.onload = function () {
     outputAreaRef = document.getElementById('locList');
     output = '';
-    //date = new Date();
-    //dateOut = date.forecastDateString;
-
+    
     //CURRENT LOCATION
     output += "<li class=\"mdl-list__item mdl-list__item--two-line mdl-list__item--three-line mdl-list__item--four-line\"  onclick=\"location.href = 'javascript:viewLocation(weatherAppcurrent)\';\"><img class=\"mdl-list__item-icon\" id=\"icon0\" src=\"images/loading.png\" class=\"list-avatar\" /><span class=\"mdl-list__item-primary-content\"><span id = \"head1\">Current Location</span><span id=\"low 0\" class=\"mdl-list__item-sub-title\">Low &deg;C:</span><span id=\"high 0\" class=\"mdl-list__item-sub-title\">High &deg;C:</span><span id=\"condition 0\" class=\"mdl-list__item-sub-title\">Condition: </span>"
 
@@ -28,7 +33,7 @@ window.onload = function () {
         loc=locationWeatherCache.locationAtIndex(i);
         
         // Make a call to 
-        locationWeatherCache.getWeatherAtIndexForDate(i,date,mainPageWeatherResponse);
+        locationWeatherCache.getWeatherAtIndexForDate(i,dateStr,mainPageWeatherResponse);
         
 
 /*        if (data !== null) {
@@ -40,10 +45,10 @@ window.onload = function () {
 
            /* output += "<li class=\"mdl-list__item mdl-list__item--two-line mdl-list__item--three-line mdl-list__item--four-line\"  onclick=\"location.href = 'javascript:viewLocation(" + i + ")\';\"><img class=\"mdl-list__item-icon\" id=\"icon0\" src=\"images/loading.png\" class=\"list-avatar\" /><span class=\"mdl-list__item-primary-content\"><span id = \"head1\">" + locName + "</span><span id=\"low 0\" class=\"mdl-list__item-sub-title\">Low &deg;C:</span><span id=\"high 0\" class=\"mdl-list__item-sub-title\">High &deg;C:</span><span id=\"condition 0\" class=\"mdl-list__item-sub-title\">Condition: </span>"*/
         }
+    outputAreaRef.innerHTML = output;
     }
 
-    outputAreaRef.innerHTML = output;
-}
+    
 
 
 function mainPageWeatherResponse(response) // the weather obj
@@ -94,20 +99,6 @@ function addCurrent() {
 
 
 
-/*//global variables
-var nickNameString = ""
-var high = []
-var low = []
-var condition =[]
-
-function nickNameStringUpdate(nickName) {
-    for (i = 0, i < locations.length, i++) {
-        nickNameString += nickName
-
-    }
-
-}
 
 
-
-function conditionSummaryImage()*/
+/*function conditionSummaryImage()*/
