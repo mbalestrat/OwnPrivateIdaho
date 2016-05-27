@@ -3,6 +3,19 @@
 // This is sample code to demonstrate navigation.
 // You need not use it for final app.
 
+var outputAreaRef = document.getElementById("locDate");
+var output = "";
+
+var currentDate = new Date();
+
+var dateStr = currentDate.simpleDateString();
+
+var forecastDate = currentDate.forecastDateString();
+
+outputAreaRef.innerHTML = dateStr;
+
+//-----------------------------------------------------------------------------
+
 var APP_PREFIX="weatherApp";
 
 var chosenLocation = localStorage.getItem(APP_PREFIX + "-selected");
@@ -23,14 +36,15 @@ var chosenLocationObj = JSON.parse(chosenLocation);
     var longitude = Number(longRaw.split('"').join(''));
     
   //Extract Weather from location
-    //var key = chosenLocationObj.lat + ',' + chosenLocationObj.long + ',' + dateStr;
-    //var weatherInfoRaw = chosenLocationObj.forecasts;
+    var key = chosenLocationObj.lat + ',' + chosenLocationObj.long + ',' + forecastDate;
+    var weatherInfoRaw = chosenLocationObj.forecasts[key];
     
-  /*      //Get the summary
-        var weatherInfo = JSON.stringify(weatherInfoRaw.data[0].summary);
-        var summary = weatherInfo.split('"').join('');
+        //Get the summary
+        //var weatherInfo = chosenLocationObj.forecasts[key];
+        //var currentInfo = weatherInfo.prototype.pop;
+        //split('"').join('');
     
-        //Get the Lo Temps
+       /* //Get the Lo Temps
         var loTemp = JSON.stringify(weatherInfoRaw.data[0].apparentTemperatureMin);
         var loCel = loTemp.split('"').join('');
     
@@ -38,11 +52,9 @@ var chosenLocationObj = JSON.parse(chosenLocation);
         var hiTemp = JSON.stringify(weatherInfoRaw.data[0].apparentTemperatureMax);
         var hiCel = hiTemp.split('"').join('');
     
-        //Get Icon
-        var iconR = JSON.stringify(weatherInfoRaw.data[0].icon);
-        var icon = iconR.split('"').join('');
         */
 
+//Header Bar
 if (chosenLocation !== null) 
         {
             document.getElementById("headerBarTitle").textContent = loc;
@@ -69,20 +81,8 @@ Date.prototype.simpleDateString = function () {
     return dateString;
 }
 
-var outputAreaRef = document.getElementById("locDate");
-var output = "";
 
-var currentDate = new Date();
 
-var dateStr = currentDate.simpleDateString()
-
-outputAreaRef.innerHTML = dateStr;
-
-//time zone errors
-Date.prototype.forcastDateString = function () {
-
-    return this.simpleDateString() + "T12:00:00"
-}
 
 //map displays on the page
 
@@ -120,13 +120,6 @@ slide.onchange = function() {
 
 //A summary of the weather
 /*
-var APIID = "760b8e8a0a5f4992d672bcb53a07998e";
-var temp;
-var loc;
-var icon;
-var humidity;
-var wind;
-var direction;
 
 
 function update(weather)
