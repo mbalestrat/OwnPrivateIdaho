@@ -23,17 +23,18 @@ window.onload = function () {
     output = '';
     
     //CURRENT LOCATION
-    output += "<li class=\"mdl-list__item mdl-list__item--two-line mdl-list__item--three-line mdl-list__item--four-line\"  onclick=\"location.href = 'javascript:viewLocation(weatherAppcurrent)\';\"><img class=\"mdl-list__item-icon\" id=\"icon0\" src=\"images/loading.png\" class=\"list-avatar\" /><span class=\"mdl-list__item-primary-content\"><span id = \"head1\">Current Location</span><span id=\"low 0\" class=\"mdl-list__item-sub-title\">Low &deg;C:</span><span id=\"high 0\" class=\"mdl-list__item-sub-title\">High &deg;C:</span><span id=\"condition 0\" class=\"mdl-list__item-sub-title\">Condition: </span>"
+    output += "<li class=\"mdl-list__item mdl-list__item--two-line mdl-list__item--three-line mdl-list__item--four-line\"  onclick=\"location.href = 'javascript:viewLocation(current)\';\"><img class=\"mdl-list__item-icon\" id=\"icon0\" src=\"images/loading.png\" class=\"list-avatar\" /><span class=\"mdl-list__item-primary-content\"><span id = \"head1\">Current Location</span><span id=\"low 0\" class=\"mdl-list__item-sub-title\">Low &deg;C:</span><span id=\"high 0\" class=\"mdl-list__item-sub-title\">High &deg;C:</span><span id=\"condition 0\" class=\"mdl-list__item-sub-title\">Condition: </span>"
 
     
     var loc;
-    var listofLocations=locationWeatherCache
+    var listofLocations = locationWeatherCache;
+    
     for (i = 0; i < locationWeatherCache.length(); i++) {
        // data = localStorage.getItem(APP_PREFIX + i);
-        loc=locationWeatherCache.locationAtIndex(i);
+        loc = locationWeatherCache.locationAtIndex(i);
         
         // Make a call to 
-        locationWeatherCache.getWeatherAtIndexForDate(i,dateStr,mainPageWeatherResponse);
+        locationWeatherCache.getWeatherAtIndexForDate(i, dateStr, mainPageWeatherResponse);
         
 
 /*        if (data !== null) {
@@ -44,32 +45,30 @@ window.onload = function () {
             //localStorage.addItem(JSON.stringify(dataObj); */
 
            /* output += "<li class=\"mdl-list__item mdl-list__item--two-line mdl-list__item--three-line mdl-list__item--four-line\"  onclick=\"location.href = 'javascript:viewLocation(" + i + ")\';\"><img class=\"mdl-list__item-icon\" id=\"icon0\" src=\"images/loading.png\" class=\"list-avatar\" /><span class=\"mdl-list__item-primary-content\"><span id = \"head1\">" + locName + "</span><span id=\"low 0\" class=\"mdl-list__item-sub-title\">Low &deg;C:</span><span id=\"high 0\" class=\"mdl-list__item-sub-title\">High &deg;C:</span><span id=\"condition 0\" class=\"mdl-list__item-sub-title\">Condition: </span>"*/
+        
         }
     outputAreaRef.innerHTML = output;
     }
 
-    
 
-
-function mainPageWeatherResponse(response) // the weather obj
+function mainPageWeatherResponse(index, response) // the weather obj
 {
     // get the index of the location of this weather obj by calling 
-    var index=locationWeatherCache.getIndexByLatLng(response.lat,response.lng);
-    var loc=locationWeatherCache.locationAtIndex(index);
+   // var index = locationWeatherCache.getIndexByLatLng(response.lat, response.long);
+    
+    if (index !== -1){
+    var loc = locationWeatherCache.locationAtIndex(index);
+    //console.log(loc);
     //
     // to generate the output
-     output += "<li class=\"mdl-list__item mdl-list__item--two-line mdl-list__item--three-line mdl-list__item--four-line\"  onclick=\"location.href = 'javascript:viewLocation(" + i + ")\';\"><img class=\"mdl-list__item-icon\" id=\"icon0\" src=\"images/loading.png\" class=\"list-avatar\" /><span class=\"mdl-list__item-primary-content\"><span id = \"head1\">" + locName + "</span><span id=\"low 0\" class=\"mdl-list__item-sub-title\">Low &deg;C:</span><span id=\"high 0\" class=\"mdl-list__item-sub-title\">High &deg;C:</span><span id=\"condition 0\" class=\"mdl-list__item-sub-title\">Condition: </span>"
+     output += "<li class=\"mdl-list__item mdl-list__item--two-line mdl-list__item--three-line mdl-list__item--four-line\"  onclick=\"location.href = 'javascript:viewLocation()\';\"><img class=\"mdl-list__item-icon\" id=\"icon0\" src=\"images/loading.png\" class=\"list-avatar\" /><span class=\"mdl-list__item-primary-content\"><span id = \"head1\"> BLAH </span><span id=\"low 0\" class=\"mdl-list__item-sub-title\">Low &deg;C:</span><span id=\"high 0\" class=\"mdl-list__item-sub-title\">High &deg;C:</span><span id=\"condition 0\" class=\"mdl-list__item-sub-title\">Condition: </span>"
+     }
+     
      outputAreaRef.innerHTML += output;
 }
 
 
-
-// Get Weather for each location
-
-
 //Display Current location GPS
-addCurrent();
-
 function addCurrent() {
     var currentLat;
     var currentLng;
@@ -96,7 +95,8 @@ function addCurrent() {
 
 
 
-
+// Call GPS function
+addCurrent();
 
 
 

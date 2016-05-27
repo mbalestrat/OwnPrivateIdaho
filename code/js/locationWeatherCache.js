@@ -153,14 +153,14 @@ function LocationWeatherCache() {
 
         //Check if weather data point for date is already in forecasts array.
         if (place.forecasts.hasOwnProperty(key)) {
+            // If yes, call callback function with weather data.
             return callback(index, place.forecasts[key]);
+            //index, 
         }
 
         if (callbacks[key] == undefined) {
-            // If yes, call callback function with weather data.
-            callbacks[key] = [callback, index];
-
             // If not, call forecast API with JSONP
+            callbacks[key] = [callback, index];
             jsonpRequest("https://api.forecast.io/forecast/" + APIkey, key);
         }
 
@@ -210,15 +210,15 @@ function LocationWeatherCache() {
     // matching latitude and longitude if one exists, otherwise it
     // returns -1.
     //
-    function getIndexByLatLng(lat, lng) {
+    this.getIndexByLatLng = function (lat, lng) {
         for (var i = 0; i < locations.length; i++) {
-            if (locations[i].lat === lat && locations[i].lng === lng) {
+            if (locations[i].lat === lat && locations[i].long === long) {
                 return (i);
             }
         }
         return (-1);
-    }
-}
+        }
+    };
 
     function jsonpRequest(url, data) {
         // Build URL parameters from data object.
@@ -258,7 +258,8 @@ function loadLocations() {
     var locationWeatherFromStorageJSON = localStorage.getItem(APP_PREFIX);
     locationWeatherCache = new LocationWeatherCache();
     
-    if (!(locationWeatherFromStorageJSON === null || locationWeatherFromStorageJSON === "undefined")) {
+    if (!(locationWeatherFromStorageJSON === null || locationWeatherFromStorageJSON === "undefined")) 
+    {
         locationWeatherPDO = JSON.parse(locationWeatherFromStorageJSON);
         locationWeatherCache.initialiseFromPDO(locationWeatherPDO);
     }
