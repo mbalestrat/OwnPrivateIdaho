@@ -55,14 +55,15 @@ function mainPageWeatherResponse(index, response) // the weather obj
 {
     // get the index of the location of this weather obj by calling 
    // var index = locationWeatherCache.getIndexByLatLng(response.lat, response.long);
-    
-    if (index !== -1){
-    var loc = locationWeatherCache.locationAtIndex(index);
+
+    var locRaw = locationWeatherCache.locationAtIndex(index);
+    var locRawName = JSON.stringify(locRaw.nick);
+    var loc = locRawName.split('"').join('');
+   
     //console.log(loc);
     //
     // to generate the output
-     output += "<li class=\"mdl-list__item mdl-list__item--two-line mdl-list__item--three-line mdl-list__item--four-line\"  onclick=\"location.href = 'javascript:viewLocation()\';\"><img class=\"mdl-list__item-icon\" id=\"icon0\" src=\"images/loading.png\" class=\"list-avatar\" /><span class=\"mdl-list__item-primary-content\"><span id = \"head1\"> BLAH </span><span id=\"low 0\" class=\"mdl-list__item-sub-title\">Low &deg;C:</span><span id=\"high 0\" class=\"mdl-list__item-sub-title\">High &deg;C:</span><span id=\"condition 0\" class=\"mdl-list__item-sub-title\">Condition: </span>"
-     }
+     output += "<li class=\"mdl-list__item mdl-list__item--two-line mdl-list__item--three-line mdl-list__item--four-line\"  onclick=\"location.href = 'javascript:viewLocation()\';\"><img class=\"mdl-list__item-icon\" id=\"icon0\" src=\"images/loading.png\" class=\"list-avatar\" /><span class=\"mdl-list__item-primary-content\"><span id = \"head1\">" + loc + "</span><span id=\"low 0\" class=\"mdl-list__item-sub-title\">Low &deg;C:</span><span id=\"high 0\" class=\"mdl-list__item-sub-title\">High &deg;C:</span><span id=\"condition 0\" class=\"mdl-list__item-sub-title\">Condition: </span>"
      
      outputAreaRef.innerHTML += output;
 }
