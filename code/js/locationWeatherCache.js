@@ -242,7 +242,7 @@ function LocationWeatherCache() {
                 params += "/" + data;
 
 
-        params += "/?exclude=[currently,minutely,hourly,alerts,flags]&callback=locationWeatherCache.weatherResponse";
+        params += "/?exclude=[currently,minutely,hourly,alerts]&units=si&callback=locationWeatherCache.weatherResponse";
 
         var script = document.createElement('script');
         script.src = url + params;

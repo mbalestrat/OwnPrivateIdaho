@@ -80,7 +80,7 @@ function mainPageWeatherResponse(index, response) // the weather obj
         var hiCel = hiTemp.split('"').join('');
     
     // Generate the output
-     output += "<li class=\"mdl-list__item mdl-list__item--two-line mdl-list__item--three-line mdl-list__item--four-line\"  onclick=\"location.href = 'javascript:viewLocation()\';\"><img class=\"mdl-list__item-icon\" id=\"icon0\" src=\"images/loading.png\" class=\"list-avatar\" /><span class=\"mdl-list__item-primary-content\"><span id = \"head1\">" + loc + "</span><span id=\"low 0\" class=\"mdl-list__item-sub-title\">Low &deg;C: "+loCel+"</span><span id=\"high 0\" class=\"mdl-list__item-sub-title\">High &deg;C: "+hiCel+"</span><span id=\"condition 0\" class=\"mdl-list__item-sub-title\">"+ summary +"</span><br><br>"
+     output += "<li class=\"mdl-list__item mdl-list__item--two-line mdl-list__item--three-line mdl-list__item--four-line\"  onclick=\"location.href = 'javascript:viewLocation()\';\"><img class=\"mdl-list__item-icon\" id=\"icon0\" src=\"images/loading.png\" class=\"list-avatar\" /><span class=\"mdl-list__item-primary-content\"><span id = \"head1\">" + loc + "</span><span id=\"condition 0\" class=\"mdl-list__item-sub-title\">"+ summary +"</span><span id=\"low 0\" class=\"mdl-list__item-sub-title\">Min &deg;C: "+loCel+"</span><span id=\"high 0\" class=\"mdl-list__item-sub-title\">Max &deg;C: "+hiCel+"</span><br><br>"
      
      outputAreaRef.innerHTML += output;
 }
