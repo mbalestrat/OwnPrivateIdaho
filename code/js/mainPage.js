@@ -55,15 +55,25 @@ function mainPageWeatherResponse(index, response) // the weather obj
 {
     // get the index of the location of this weather obj by calling 
    // var index = locationWeatherCache.getIndexByLatLng(response.lat, response.long);
-
+    
+    //Pull location from cache
     var locRaw = locationWeatherCache.locationAtIndex(index);
+    
+    //Extract name of location
     var locRawName = JSON.stringify(locRaw.nick);
     var loc = locRawName.split('"').join('');
-   
-    //console.log(loc);
-    //
-    // to generate the output
-     output += "<li class=\"mdl-list__item mdl-list__item--two-line mdl-list__item--three-line mdl-list__item--four-line\"  onclick=\"location.href = 'javascript:viewLocation()\';\"><img class=\"mdl-list__item-icon\" id=\"icon0\" src=\"images/loading.png\" class=\"list-avatar\" /><span class=\"mdl-list__item-primary-content\"><span id = \"head1\">" + loc + "</span><span id=\"low 0\" class=\"mdl-list__item-sub-title\">Low &deg;C:</span><span id=\"high 0\" class=\"mdl-list__item-sub-title\">High &deg;C:</span><span id=\"condition 0\" class=\"mdl-list__item-sub-title\">Condition: </span>"
+    
+    //Extract Weather from location
+    var key = locRaw.lat + ',' + locRaw.long + ',' + dateStr;
+    var weatherInfoRaw = locRaw.forecasts[key];
+    
+    
+        //Get the summary
+        var weatherInfo = JSON.stringify(weatherInfoRaw.data[0].summary);
+        var summary = weatherInfo.split('"').join('');
+    
+    // Generate the output
+     output += "<li class=\"mdl-list__item mdl-list__item--two-line mdl-list__item--three-line mdl-list__item--four-line\"  onclick=\"location.href = 'javascript:viewLocation()\';\"><img class=\"mdl-list__item-icon\" id=\"icon0\" src=\"images/loading.png\" class=\"list-avatar\" /><span class=\"mdl-list__item-primary-content\"><span id = \"head1\">" + loc + "</span><span id=\"low 0\" class=\"mdl-list__item-sub-title\">Low &deg;C:</span><span id=\"high 0\" class=\"mdl-list__item-sub-title\">High &deg;C:</span><span id=\"condition 0\" class=\"mdl-list__item-sub-title\">"+ summary +"</span>"
      
      outputAreaRef.innerHTML += output;
 }
