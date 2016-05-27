@@ -67,13 +67,20 @@ function mainPageWeatherResponse(index, response) // the weather obj
     var key = locRaw.lat + ',' + locRaw.long + ',' + dateStr;
     var weatherInfoRaw = locRaw.forecasts[key];
     
-    
         //Get the summary
         var weatherInfo = JSON.stringify(weatherInfoRaw.data[0].summary);
         var summary = weatherInfo.split('"').join('');
     
+        //Get the Lo Temps
+        var loTemp = JSON.stringify(weatherInfoRaw.data[0].apparentTemperatureMin);
+        var loCel = loTemp.split('"').join('');
+    
+        //Get the Hi Temps
+        var hiTemp = JSON.stringify(weatherInfoRaw.data[0].apparentTemperatureMax);
+        var hiCel = hiTemp.split('"').join('');
+    
     // Generate the output
-     output += "<li class=\"mdl-list__item mdl-list__item--two-line mdl-list__item--three-line mdl-list__item--four-line\"  onclick=\"location.href = 'javascript:viewLocation()\';\"><img class=\"mdl-list__item-icon\" id=\"icon0\" src=\"images/loading.png\" class=\"list-avatar\" /><span class=\"mdl-list__item-primary-content\"><span id = \"head1\">" + loc + "</span><span id=\"low 0\" class=\"mdl-list__item-sub-title\">Low &deg;C:</span><span id=\"high 0\" class=\"mdl-list__item-sub-title\">High &deg;C:</span><span id=\"condition 0\" class=\"mdl-list__item-sub-title\">"+ summary +"</span>"
+     output += "<li class=\"mdl-list__item mdl-list__item--two-line mdl-list__item--three-line mdl-list__item--four-line\"  onclick=\"location.href = 'javascript:viewLocation()\';\"><img class=\"mdl-list__item-icon\" id=\"icon0\" src=\"images/loading.png\" class=\"list-avatar\" /><span class=\"mdl-list__item-primary-content\"><span id = \"head1\">" + loc + "</span><span id=\"low 0\" class=\"mdl-list__item-sub-title\">Low &deg;C: "+loCel+"</span><span id=\"high 0\" class=\"mdl-list__item-sub-title\">High &deg;C: "+hiCel+"</span><span id=\"condition 0\" class=\"mdl-list__item-sub-title\">"+ summary +"</span><br><br>"
      
      outputAreaRef.innerHTML += output;
 }
