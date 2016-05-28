@@ -210,7 +210,7 @@ function LocationWeatherCache() {
     // matching latitude and longitude if one exists, otherwise it
     // returns -1.
     //
-    this.getIndexByLatLng = function (lat, lng) {
+    this.getIndexByLatLng = function (lat, long) {
         for (var i = 0; i < locations.length; i++) {
             if (locations[i].lat === lat && locations[i].long === long) {
                 return (i);

@@ -16,6 +16,7 @@ function viewLocation(locationIndex) {
     //Save the desired location to local storage
     localStorage.setItem(APP_PREFIX + "-selected", JSON.stringify(weatherData[locationIndex]));
     //And load the view location page.
+    lastIndex = locationIndex;
     location.href = 'viewlocation.html';
 }
 

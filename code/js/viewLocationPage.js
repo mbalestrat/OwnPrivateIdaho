@@ -14,6 +14,7 @@ outputAreaRef.textContent = dateStr;
 //-----------------------------------------------------------------------------
 
 var APP_PREFIX="weatherApp";
+var weatherData = [];
 
 var chosenLocation = localStorage.getItem(APP_PREFIX + "-selected");
 var chosenLocationObj = JSON.parse(chosenLocation);
@@ -32,12 +33,20 @@ var chosenLocationObj = JSON.parse(chosenLocation);
     var longRaw = JSON.stringify(chosenLocationObj.long);
     var longitude = Number(longRaw.split('"').join(''));
     
+//Get the index from the lat/lng
+index = locationWeatherCache.getIndexByLatLng(latitude,longitude);
+
+locationWeatherCache.getWeatherAtIndexForDate(index, forecastDate, viewPageWeatherResponse);
 
 // The part below could be changed by the slider movement.
-
+function viewPageWeatherResponse(index, response) // the weather obj
+{
+    
+    var locRaw = locationWeatherCache.locationAtIndex(index);
+    
   //Extract Weather from location
-    var key = chosenLocationObj.lat + ',' + chosenLocationObj.long + ',' + forecastDate;
-    var weatherInfoRaw = chosenLocationObj.forecasts[key];
+    var key = locRaw.lat + ',' + locRaw.long + ',' + forecastDate;
+    var weatherInfoRaw = locRaw.forecasts[key];
 
     //Insert call to API here
     //Perhaps use if/else statement if forecastDate == the current forecast
@@ -69,6 +78,7 @@ var chosenLocationObj = JSON.parse(chosenLocation);
 
 //Output to page
 document.getElementById("summary").innerHTML = "<strong>" + summary + "</strong>" + "<br> Chance of Rain: " + precip + "%" + "<br> Max/Min: " + hiCel + "&deg;C / " + loCel + "&deg;C" + "<br> Wind Speed: " + windSp + "km/h" + "<br> Barometric Pressure: " + baro + " atm";
+}
 
 
 //Header Bar
@@ -125,13 +135,18 @@ function locMap() {
 //30 positions
 //set to the far right
 var slide = document.getElementById('slide');
-
+var forecastDate;
 
 function slideChange(){
     //Each position means - 24 hours
     var slideDate = new Date();
     slideDate.setDate(slideDate.getDate() - (-1* slide.value));
     
+    //Get weather for location at new date
+    //chosenLocationObj = locationWeatherCache.getWeatherAtIndexForDate();
+    
     locDate.innerHTML = slideDate.simpleDateString();
+    forecastDate = slideDate.forecastDateString();
+    locationWeatherCache.getWeatherAtIndexForDate(index, forecastDate, viewPageWeatherResponse);
 }
 
