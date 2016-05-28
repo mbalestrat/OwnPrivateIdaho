@@ -96,30 +96,7 @@ function mainPageWeatherResponse(index, response) // the weather obj
 }
 
 
-//Display Current location GPS
-function addCurrent() {
-    var currentLat;
-    var currentLng;
 
-    navigator.geolocation.getCurrentPosition(
-        function (location) {
-            currentLat = location.coords.latitude;
-            currentLng = location.coords.longitude;
-            console.log(location.coords.accuracy);
-        });
-
-
-    // Create the newLoc object 
-    var current = {
-        lat: currentLat,
-        long: currentLng,
-        nick: 'current location',
-        forecasts: {}
-    };
-
-    // Save to cache
-    localStorage.setItem('current', JSON.stringify(current));
-};
 
 
 

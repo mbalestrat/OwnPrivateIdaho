@@ -30,8 +30,8 @@ Date.prototype.forecastDateString = function () {
 //------------------------------------------------------------------
 
 // Code for LocationWeatherCache class and other shared code.
-// Global variable to count the number of removed items and offset the index of locations array.
-var spliceCount;
+var currentLat;
+var currentLng;
 var locationWeatherCache;
 //
 
@@ -100,7 +100,8 @@ function LocationWeatherCache() {
     this.removeLocationAtIndex = function (index) {
         if (index > -1) {
             locations.splice(index, 1);
-            spliceCount++;
+            saveLocations();
+            location.href = 'index.html'
         }
     };
 
@@ -248,6 +249,34 @@ function LocationWeatherCache() {
         script.src = url + params;
         document.body.appendChild(script);
     }
+
+
+
+//Display Current location GPS
+this.addCurrent = function () {
+    
+    navigator.geolocation.getCurrentPosition(
+        function (location) {
+            currentLat = location.coords.latitude;
+            currentLng = location.coords.longitude;
+            console.log(location.coords.accuracy);
+        });
+
+    // Create the newLoc object 
+    var current = {
+        lat: currentLat,
+        long: currentLng,
+        nick: 'Current Location',
+        forecasts: {}
+    };
+
+    // Save to cache
+    locations.push(current);
+    saveLocations();
+    
+    locationWeatherCache.getWeatherAtIndexForDate(0, dateStr, mainPageWeatherResponse);
+    
+};
 
 //================================================================
 // Restore the singleton locationWeatherCache from Local Storage.

@@ -74,10 +74,13 @@ function viewPageWeatherResponse(index, response) // the weather obj
         //Get the barometric pressure
         var pressure = JSON.stringify(weatherInfoRaw.data[0].pressure);
         var baro = pressure.split('"').join('');
+        
+        var humidity = JSON.stringify(weatherInfoRaw.data[0].humidity);
+        var humid = humidity.split('"').join('');
 
 
 //Output to page
-document.getElementById("summary").innerHTML = "<strong>" + summary + "</strong>" + "<br> Chance of Rain: " + precip + "%" + "<br> Max/Min: " + hiCel + "&deg;C / " + loCel + "&deg;C" + "<br> Wind Speed: " + windSp + "km/h" + "<br> Barometric Pressure: " + baro + " atm";
+document.getElementById("summary").innerHTML = "<strong>" + summary + "</strong>" + "<br> Chance of Rain: " + precip + "%" + "<br> Max/Min: " + hiCel + "&deg;C / " + loCel + "&deg;C" + "<br> Wind Speed: " + windSp + "km/h" + "<br> Humidity: " + humid + "%" + "<br> Barometric Pressure: " + baro + " atm";
 }
 
 
@@ -126,6 +129,12 @@ function locMap() {
     fieldValueChanged = function () {
         geocoderAddress(geocoder, map);
     };
+    
+    var marker = new google.maps.Marker({
+    position: {lat: latitude, lng: longitude},
+    map: map,
+    title: loc
+  });
 }
 
 // Slider calls the getWeatherAtIndexForDate function, with a different callback function to display results on this page.
