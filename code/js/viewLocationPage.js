@@ -5,14 +5,11 @@
 
 var outputAreaRef = document.getElementById("locDate");
 var output = "";
-
 var currentDate = new Date();
-
 var dateStr = currentDate.simpleDateString();
-
 var forecastDate = currentDate.forecastDateString();
 
-outputAreaRef.innerHTML = dateStr;
+outputAreaRef.textContent = dateStr;
 
 //-----------------------------------------------------------------------------
 
@@ -35,11 +32,16 @@ var chosenLocationObj = JSON.parse(chosenLocation);
     var longRaw = JSON.stringify(chosenLocationObj.long);
     var longitude = Number(longRaw.split('"').join(''));
     
+
+// The part below could be changed by the slider movement.
+
   //Extract Weather from location
     var key = chosenLocationObj.lat + ',' + chosenLocationObj.long + ',' + forecastDate;
     var weatherInfoRaw = chosenLocationObj.forecasts[key];
 
-    
+    //Insert call to API here
+    //Perhaps use if/else statement if forecastDate == the current forecast
+
         //Get the summary
         var weatherInfo = JSON.stringify(weatherInfoRaw.data[0].summary);
         var summary = weatherInfo.split('"').join('');
@@ -97,10 +99,7 @@ Date.prototype.simpleDateString = function () {
 }
 
 
-
-
 //map displays on the page
-
 var map;
 
 function locMap() {
@@ -125,10 +124,14 @@ function locMap() {
 //A date selection slider
 //30 positions
 //set to the far right
-var slide = document.getElementById('slide'),
-    sliderDate = new Date;
+var slide = document.getElementById('slide');
 
-slide.onchange = function() {
-    sliderDate.innerHTML = this.value;
+
+function slideChange(){
+    //Each position means - 24 hours
+    var slideDate = new Date();
+    slideDate.setDate(slideDate.getDate() - (-1* slide.value));
+    
+    locDate.innerHTML = slideDate.simpleDateString();
 }
 
